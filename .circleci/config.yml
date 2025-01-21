@@ -3,14 +3,14 @@ version: 2.1
 commands:
   install-aws-cli:
     steps:
-      - run: echo instalando aws 
+      - run: echo instalando aws... 
       
 jobs:
   install-dependencies:
     docker:
       - image: cimg/base:stable # imagen que tiene lo suyo, imagen valida de circleCi=cimg
     steps:
-      - intall-aws-cli
+      - install-aws-cli
       - checkout:
           path: micodigo/
       - run: ls -lt
