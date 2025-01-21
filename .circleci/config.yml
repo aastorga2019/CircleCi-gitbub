@@ -21,11 +21,11 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - dime_la_hora_y_espera
-        tiempo: 7
+      - dime_la_hora_y_espera:
+          tiempo: 7
       - run: echo Adios Como fue?
-      - dime_la_hora_y_espera
-        tiempo: 8
+      - dime_la_hora_y_espera:
+          tiempo: 8
 
 workflows:
   workflow1:
