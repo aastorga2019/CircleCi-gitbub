@@ -10,10 +10,10 @@ jobs:
     docker:
       - image: cimg/base:stable # imagen que tiene lo suyo, imagen valida de circleCi=cimg
     steps:
-      - install-aws-cli
       - checkout:
           path: micodigo/
-      - run: ls -lt
+      - run: ls -lt micodigo/
+      - install-aws-cli
 
 workflows:
   workflow1:
