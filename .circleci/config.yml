@@ -1,26 +1,41 @@
 version: 2.1
 
-commands:
-  install-prereq:
-    steps:
-      - run: apt-get update && apt-get install -y apt-transport-https ca-certificates gnupg curl
-  install-gcp-cli:
-    steps:
-      - run: curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-      - run: echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list 
-      - run: apt-get update && apt-get install -y google-cloud-cli 
-      #- run: gcloud init
+orbs:
+  gcp-cli: circleci/gcp-cli@3.3.0
       
 jobs:
-  install-all:
-    docker:
-      - image: ubuntu:latest
+  use-gcp:
+    executor: gcp-cli/default
     steps:
-      - install-prereq
-      - install-gcp-cli
-      
+      - gcp-cli/setup:
+          version: 404.0.0
+          
 workflows:
-  workflow1:
+  install_and_configure_cli:
     jobs:
-      - install-all:
+      - use-gcp:
           context: gcp-access
+
+#version: 2.1
+#commands:
+#  install-prereq:
+#    steps:
+#      - run: apt-get update && apt-get install -y apt-transport-https ca-certificates gnupg curl
+#  install-gcp-cli:
+#    steps:
+#      - run: curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+#      - run: echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list 
+#      - run: apt-get update && apt-get install -y google-cloud-cli 
+#      #- run: gcloud init     
+#jobs:
+#  install-all:
+#    docker:
+#      - image: ubuntu:latest
+#    steps:
+#      - install-prereq
+#      - install-gcp-cli      
+#workflows:
+#  workflow1:
+#    jobs:
+#      - install-all:
+#          context: gcp-access
